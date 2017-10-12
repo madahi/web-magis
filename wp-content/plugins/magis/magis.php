@@ -20,14 +20,23 @@
 
 class MagisMeeting
 {
-	public function __construct()
-	{
-		add_action('init', array($this, 'init'));
-		add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
+	public function __construct() {
+		require 'api/cronograma-citas.php';
 
+		add_action( 'rest_api_init', function () {
+			$api_controller = new MAGIS_ApiCronogramaCitas();
+			$api_controller->register_routes();
+		});
+
+		add_action('init', array($this, 'init'));
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+		
 		add_shortcode('magis_create_meeting', array($this, 'create_meeting_form'));
 		add_shortcode('magis_meeting_result', array($this, 'meeting_result_view'));
 	}
+
+
+
 
 	public function init() {
         if (!empty($_POST['nonce_custom_form']))  {
@@ -43,7 +52,7 @@ class MagisMeeting
         }
 	}
 
-	function wp_enqueue_scripts() {
+	function enqueue_scripts() {
 		/*wp_register_style( 'magis-styles',  plugin_dir_url( __FILE__ ) . 'assets/css/magis.css' );
 		wp_enqueue_style( 'magis-styles' );*/
 
@@ -62,43 +71,34 @@ class MagisMeeting
 		require 'templates/meeting-form.php';
 	}
 
-	function meeting_result_view() {
-		require 'templates/meeting-result.php';
+	function meeting_result_view($params) {
+		$meeting_hash_id = $this->_get('meeting_hash_id');
+		if (empty($meeting_hash_id)) {
+			$magis_error_msg = 'No se encontró el identificador para la cita programada.';
+			require 'templates/error.php';
+		} else {
+			require 'templates/meeting-result.php';
+		}
 	}
 
 
 
 
 	function meeting_form_post() {
-		echo 'meeting_form_post ';
-		$error = null;
-		if (empty($_POST['meeting-uci']))
-		{
-			$error = new WP_Error('empty_error', __('Por favor ingrese su CI.', 'tahiryasin'));
-			wp_die($error->get_error_message(), __('CustomForm Error', 'tahiryasin'));
-			echo 'NO CI';
+		if (empty($_POST['meeting-uci'])) {
+			$this->show_error('Por favor ingrese su CI.');
 		}
-		if (empty($_POST['meeting-uname']))
-		{
-			$error = new WP_Error('empty_error', __('Por favor ingrese su nombre.', 'tahiryasin'));
-			wp_die($error->get_error_message(), __('CustomForm Error', 'tahiryasin'));
-			echo 'NO NAME';
+		if (empty($_POST['meeting-uname'])) {
+			$this->show_error('Por favor ingrese su nombre.');
 		}
-		if (empty($_POST['meeting-phone']))
-		{
-			$error = new WP_Error('empty_error', __('Por favor ingrese su teléfono.', 'tahiryasin'));
-			wp_die($error->get_error_message(), __('CustomForm Error', 'tahiryasin'));
-			echo 'NO PHONE';
+		if (empty($_POST['meeting-phone'])) {
+			$this->show_error('Por favor ingrese su teléfono.');
 		}
-		if (empty($_POST['meeting-city']))
-		{
-			$error = new WP_Error('empty_error', __('Por favor ingrese la ciudad.', 'tahiryasin'));
-			wp_die($error->get_error_message(), __('CustomForm Error', 'tahiryasin'));
-			echo 'NO CITY';
+		if (empty($_POST['meeting-city'])) {
+			$this->show_error('Por favor ingrese la ciudad.');
 		}
-		else
-		{
-			global $wpdb;
+		else {
+			/*global $wpdb;
 			$wpdb->insert(
 				'magis_clientes',
 				array(
@@ -108,13 +108,29 @@ class MagisMeeting
 					'ciudad' => $_POST['meeting-city'],
 					'fecha_creacion' => current_time('mysql'),
 					)
-				);
+				);*/
 
-			$meeting_hash_id = 'hash';
-
-			wp_redirect('/programacion-de-cita/?id=' . $meeting_hash_id);
+			$meeting_hash_id = '12345678';
+			wp_redirect('/programacion-de-cita?meeting_hash_id=' . $meeting_hash_id);
 			exit;
 		}
+	}
+
+
+
+
+
+
+	function show_error($msg) {
+		$error = new WP_Error('empty_error', __($msg, 'magis'));
+		wp_die($error->get_error_message(), __('CustomForm Error', 'magis'));
+	}
+
+	function _get($key) {
+		$actual_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$url_parts = parse_url($actual_url);
+		parse_str($url_parts['query'], $query);
+		return $query[$key];
 	}
 }
 
