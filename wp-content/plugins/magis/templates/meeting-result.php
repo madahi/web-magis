@@ -1,0 +1,4 @@
+
+<div>
+	Resultado cita
+</div>
