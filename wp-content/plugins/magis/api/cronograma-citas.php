@@ -27,18 +27,9 @@ class MAGIS_ApiCronogramaCitas {
     }
 
 	function cronograma_citas_proyecto($request) {
-		//$request['project'];
-		return array(
-			array(
-				'id' => 'fw32r23',
-				'dia' => 'Viernes',
-				'periodo' => '8:00 - 10:00',
-			),
-			array(
-				'id' => 'dyu78',
-				'dia' => 'Viernes',
-				'periodo' => '9:00 - 11:00'
-			),
-		);
+		$id_project = $request['project'];
+		global $wpdb;
+		$results = $wpdb->get_results('SELECT id, dia, periodo FROM magis_cronograma_citas WHERE (id_proyecto = ' . $id_project . ') and (estado = 1)');
+		return $results;
 	}
 }

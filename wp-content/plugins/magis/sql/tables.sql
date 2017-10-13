@@ -12,13 +12,14 @@ CREATE TABLE `magis_clientes` (
 );
 
 CREATE TABLE `magis_cronograma_citas` (
-  `IdCronograma` int(10) UNSIGNED NOT NULL,
-  `IdUserPromotor` bigint(20) UNSIGNED NOT NULL,
-  `FechaHoraInicio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaHoraFin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaHoraRegistro` datetime DEFAULT CURRENT_TIMESTAMP,
-  `IdEstado` int(10) UNSIGNED NOT NULL,
-  `IdUserRegistrador` bigint(20) UNSIGNED NOT NULL
+	`id` MEDIUMINT NOT NULL AUTO_INCREMENT,
+	`dia` VARCHAR(24) NOT NULL,
+	`periodo` VARCHAR(128) NOT NULL,
+	`estado` int(10) UNSIGNED NOT NULL,
+	`id_promotor` MEDIUMINT NOT NULL,
+	`id_proyecto`MEDIUMINT NOT NULL,
+	`id_usuario_registrador` MEDIUMINT NOT NULL,
+	PRIMARY KEY (id)
 )
 
 CREATE TABLE `magis_citas` (
