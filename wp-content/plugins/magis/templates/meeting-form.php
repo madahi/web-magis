@@ -30,37 +30,23 @@
 	</div>
 
 	<div class="input-group">
-		<label class="input-label" for="meeting-day">Día de la visita</label>
-		<ul>
-			<?php foreach($meetin_days as &$day) { ?>
-				<li>
-					<input type="radio" name="meeting-day" value="<?php echo $day ?>" checked/>
-					<label class="radio-label" for="meeting-day"><?php echo $day ?></label>
-				</li>
-			<?php } ?>
-		</ul>
-		<span class="input-description">Seleccione el día de la visita</span>
-	</div>
-
-	<div class="input-group">
-		<select name="meeting-time" placeholder="Hora de la cita" required>
-			<?php foreach($meeting_times as &$time) { ?>
-				<option> <?php echo $time; ?></option>
-			<?php } ?>
-		</select>
-		<label class="input-label" for="meeting-time">Hora de la cita</label>
-		<span class="input-description">Seleccione la hora de la cita</span>
-	</div>
-
-	<div class="input-group">
-		<select name="meeting-project" placeholder="Proyecto" required>
+		<select id="magis_meeting_project" name="meeting-project" placeholder="Proyecto" required>
 			<?php foreach($meeting_projects as &$project) { ?>
-				<option> <?php echo $project; ?></option>
+				<option value="<?php echo $project->id; ?>"><?php echo $project->nombre; ?></option>
 			<?php } ?>
 		</select>
 		<label class="input-label" for="meeting-project">Proyecto</label>
 		<span class="input-description">Seleccione el proyecto que desea ver</span>
 	</div>
 
-	<input type='submit' value='Crear'/>
+	<div class="input-group">
+		<select id="magis_meeting_date" name="meeting-date" placeholder="Día y hora de la cita" required>
+		</select>
+		<label class="input-label" for="meeting-date">Día y hora de la cita</label>
+		<span class="input-description">Seleccione el día y la hora de la cita</span>
+	</div>
+
+	<div>
+		<input type='submit' value='Crear'/>
+	</div>
 </form>

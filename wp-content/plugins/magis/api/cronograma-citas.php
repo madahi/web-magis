@@ -21,15 +21,15 @@ class MAGIS_ApiCronogramaCitas {
         register_rest_route( $this->namespace, '/' . $this->resource_name . '/(?P<project>[a-zA-Z0-9-]+)', array(
             array(
                 'methods'   => 'GET',
-                'callback'  => array( $this, 'cronograma_citas_proyecto' ),
+                'callback'  => array($this, 'cronograma_citas_proyecto'),
             )
-        ) );
+        ));
     }
 
 	function cronograma_citas_proyecto($request) {
 		$id_project = $request['project'];
 		global $wpdb;
-		$results = $wpdb->get_results('SELECT id, dia, periodo FROM magis_cronograma_citas WHERE (id_proyecto = ' . $id_project . ') and (estado = 1)');
+		$results = $wpdb->get_results('SELECT id, dia, periodo FROM magis_cronograma_citas WHERE id_proyecto = ' . $id_project);
 		return $results;
 	}
 }

@@ -18,6 +18,8 @@
  */
 
 
+require 'controllers/schedule.php';
+
 class MagisMeeting
 {
 	public function __construct() {
@@ -30,9 +32,14 @@ class MagisMeeting
 
 		add_action('init', array($this, 'init'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-		
+
 		add_shortcode('magis_create_meeting', array($this, 'create_meeting_form'));
 		add_shortcode('magis_meeting_result', array($this, 'meeting_result_view'));
+
+		$this->schedule = new MagisSchedule();
+
+		/*add_shortcode('magis_schedule_index', array($this, 'schedule_index'));
+		add_shortcode('magis_create_schedule', array($this, 'create_schedule'));*/
 	}
 
 
@@ -53,21 +60,26 @@ class MagisMeeting
 	}
 
 	function enqueue_scripts() {
-		/*wp_register_style( 'magis-styles',  plugin_dir_url( __FILE__ ) . 'assets/css/magis.css' );
-		wp_enqueue_style( 'magis-styles' );*/
-
-		wp_enqueue_style('magis', plugin_dir_url( __FILE__ ) . 'assets/css/magis.css', false, '1.1', 'all');
+		wp_enqueue_style('magis-style', plugin_dir_url( __FILE__ ) . 'assets/css/magis.css', false, '1.1', 'all');
+		wp_enqueue_script('magis-script', plugin_dir_url( __FILE__ ) . 'assets/js/magis.js', array(), '1.1', true);
 	}
 
 
+	/**************************************************************************************
 
+	**************************************************************************************/
 
 	function create_meeting_form($params) {
-		$cities = array('Sucre', 'La Paz', 'Santa Cruz');
-		$meetin_days = array('Jueves','Viernes', 'Sábado');
-		$meeting_times = array('8:00 am - 10:00 am', '10:00 am - 12:00 pm');
-		$meeting_projects = array('Departamentos Royal', 'Casa House');
+		$cities = array('Sucre', 'La Paz', 'Santa Cruz', 'Cochabamba');
+		$meeting_projects = array();
 
+		global $wpdb;
+		$projects = $wpdb->get_results("SELECT id_proyecto, COUNT(*) FROM magis_cronograma_citas WHERE estado = 'publish' GROUP BY id_proyecto");
+
+		foreach($projects as &$projref) {
+			$proj = $wpdb->get_row('SELECT ID AS id, post_title AS nombre FROM wp_posts WHERE ID =' . $projref->id_proyecto);
+			array_push($meeting_projects, $proj);
+		}
 		require 'templates/meeting-form.php';
 	}
 
@@ -77,41 +89,97 @@ class MagisMeeting
 			$magis_error_msg = 'No se encontró el identificador para la cita programada.';
 			require 'templates/error.php';
 		} else {
-			require 'templates/meeting-result.php';
+			global $wpdb;
+			$themeeting = $wpdb->get_row("SELECT * FROM magis_citas WHERE hash = '" . $meeting_hash_id . "'");
+			if (empty($themeeting)) {
+				$magis_error_msg = 'No se encontró la cita programada.';
+				require 'templates/error.php';
+			} else {
+				$client = $wpdb->get_row('SELECT * FROM magis_clientes WHERE id =' . $themeeting->id_cliente);
+
+				$schedule = $wpdb->get_row('SELECT * FROM magis_cronograma_citas WHERE id =' . $themeeting->id_cronograma);
+				$project = $wpdb->get_row('SELECT * FROM magis_proyecto WHERE id =' . $schedule->id_proyecto);
+				//var_dump();
+				require 'templates/meeting-result.php';
+			}
 		}
 	}
 
+	/**************************************************************************************
 
+	**************************************************************************************/
 
+	/*function schedule_index($params) {
+		global $wpdb;
+
+		return 'lista de cronogramas';
+	}
+
+	function create_schedule($params) {
+		global $wpdb;
+
+		$projects = $wpdb->get_results("SELECT ID AS id, post_title AS nombre FROM wp_posts WHERE (post_type='project') AND (post_status='publish')");
+		$projectors = array();
+		$days = array('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+		$periods = array('8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 pm', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00');
+
+		require 'templates/schedule-form.php';
+	}*/
+
+	/**************************************************************************************
+
+	**************************************************************************************/
 
 	function meeting_form_post() {
-		if (empty($_POST['meeting-uci'])) {
+		if(empty($_POST['meeting-uci'])) {
 			$this->show_error('Por favor ingrese su CI.');
 		}
-		if (empty($_POST['meeting-uname'])) {
+		if(empty($_POST['meeting-uname'])) {
 			$this->show_error('Por favor ingrese su nombre.');
 		}
-		if (empty($_POST['meeting-phone'])) {
+		if(empty($_POST['meeting-phone'])) {
 			$this->show_error('Por favor ingrese su teléfono.');
 		}
-		if (empty($_POST['meeting-city'])) {
+		if(empty($_POST['meeting-city'])) {
 			$this->show_error('Por favor ingrese la ciudad.');
 		}
+		if(empty($_POST['meeting-date'])) {
+			$this->show_error('Por favor ingrese el ID del cronograma.');
+		}
 		else {
-			/*global $wpdb;
-			$wpdb->insert(
-				'magis_clientes',
-				array(
-					'ci' => $_POST['meeting-uci'],
-					'nombre' => $_POST['meeting-uname'],
-					'telefono' => $_POST['meeting-phone'],
-					'ciudad' => $_POST['meeting-city'],
-					'fecha_creacion' => current_time('mysql'),
-					)
-				);*/
+			global $wpdb;
+			$client = $wpdb->get_row('SELECT * FROM magis_clientes WHERE ci =' . $_POST['meeting-uci']);
+			if (empty($client)) {
+				$wpdb->insert('magis_clientes',
+					array(
+						'ci' => $_POST['meeting-uci'],
+						'nombre' => $_POST['meeting-uname'],
+						'telefono' => $_POST['meeting-phone'],
+						'ciudad' => $_POST['meeting-city'],
+						'fecha_creacion' => current_time('mysql'),
+						'fecha_modificacion' => current_time('mysql'),
+						)
+					);
+				$client = $wpdb->get_row('SELECT * FROM magis_clientes WHERE ci =' . $_POST['meeting-uci']);
+			} else {
 
-			$meeting_hash_id = '12345678';
-			wp_redirect('/programacion-de-cita?meeting_hash_id=' . $meeting_hash_id);
+			}
+
+			$schedule = $wpdb->get_row('SELECT * FROM magis_cronograma_citas WHERE id =' . $_POST['meeting-date']);
+
+			$wpdb->insert('magis_citas',
+				array(
+					'hash' => $this->randHash(),
+					'id_cronograma' => $schedule->id,
+					'id_cliente' => $client->id,
+					'estado' => 1,
+					'fecha_creacion' => current_time('mysql')
+					)
+				);
+
+			$inserted = $wpdb->get_row('SELECT * FROM magis_citas WHERE id =' . $wpdb->insert_id);
+
+			wp_redirect('/programacion-de-cita?meeting_hash_id=' . $inserted->hash);
 			exit;
 		}
 	}
@@ -131,6 +199,10 @@ class MagisMeeting
 		$url_parts = parse_url($actual_url);
 		parse_str($url_parts['query'], $query);
 		return $query[$key];
+	}
+
+	function randHash($len=32) {
+		return substr(md5(openssl_random_pseudo_bytes(20)),-$len);
 	}
 }
 
