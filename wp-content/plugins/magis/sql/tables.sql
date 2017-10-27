@@ -43,6 +43,24 @@ CREATE TABLE `magis_citas` (
 	FOREIGN KEY (id_cliente) REFERENCES magis_clientes(id)
 );
 
+CREATE TABLE `magis_citas` (
+	`id` MEDIUMINT NOT NULL AUTO_INCREMENT,
+	`ci` VARCHAR(24) UNIQUE NOT NULL,
+	`nombre` VARCHAR(256) NOT NULL,
+	`telefono` VARCHAR(16) NOT NULL,
+	`direccion` VARCHAR(256) NOT NULL,
+
+	`ci_garante` VARCHAR(24) UNIQUE NOT NULL,
+	`nombre_garante` VARCHAR(256) NOT NULL,
+	`telefono_garante` VARCHAR(16) NOT NULL,
+	`direccion_garante` VARCHAR(256) NOT NULL,
+
+	`fecha_creacion` DATETIME NOT NULL,
+	`fecha_modificacion` DATETIME NOT NULL,
+
+	PRIMARY KEY (id)
+};
+
 INSERT INTO magis_cronograma_citas VALUES(default, 'Viernes', '8:00 am - 11:00 am', 'publish', 301, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO magis_cronograma_citas VALUES(default, 'Viernes', '14:00 - 16:00', 'publish', 301, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO magis_cronograma_citas VALUES(default, 'Sábado', '14:00 - 16:00', 'publish', 301, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

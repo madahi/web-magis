@@ -1,16 +1,18 @@
 <?php
 
-class MagisSchedule
+class MagisSchedule extends MagisController
 {
 	public function __construct() {
 		add_shortcode('magis_schedule_index', array($this, 'index'));
 		add_shortcode('magis_create_schedule', array($this, 'create'));
+		add_shortcode('magis_edit_schedule', array($this, 'edit'));
+
+		$this->schedulesModel = new MagisSchedulesModel();
 	}
 
 	function index($params) {
-		global $wpdb;
-
-		require plugin_dir_path( __FILE__ ) . '../templates/schedule-index.php';
+		$schedules = $this->schedulesModel->all_prety();
+		require plugin_dir_path( __FILE__ ) . '../views/schedule-index.php';
 	}
 
 	function create($params) {
@@ -18,9 +20,21 @@ class MagisSchedule
 
 		$projects = $wpdb->get_results("SELECT ID AS id, post_title AS nombre FROM wp_posts WHERE (post_type='project') AND (post_status='publish')");
 		$projectors = array();
-		$days = array('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
-		$periods = array('8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 pm', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00');
+		$days = $this->schedulesModel->get_all_enabled_days();
+		$periods = $this->schedulesModel->get_all_enabled_periods();
 
-		require plugin_dir_path( __FILE__ ) . '../templates/schedule-create.php';
+		require plugin_dir_path( __FILE__ ) . '../views/schedule-create.php';
+	}
+
+	function edit() {
+		$schedule_id = $this->_get('schedule_id');
+		if (empty($schedule_id)) {
+			$magis_error_msg = 'No se encontró el identificador para el cronograma de cita.';
+			require plugin_dir_path( __FILE__ ) . '../views/error.php';
+		} else {
+			$days = $this->schedulesModel->get_all_enabled_days();
+			$periods = $this->schedulesModel->get_all_enabled_periods();
+			require plugin_dir_path( __FILE__ ) . '../views/schedule-create.php';
+		}
 	}
 }

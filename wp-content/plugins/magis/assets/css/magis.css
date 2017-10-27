@@ -15,7 +15,7 @@
 	.input-group .input-description {
 		font-size: 0.8rem;
 		color: gray;}
-	
+
 	.input-group input[type=text],
 	.input-group input[type=password],
 	.input-group input[type=email] {
@@ -110,4 +110,20 @@ input[type=submit] {
 
 .magis-meeting-date-label {
 	padding-bottom: 0.5rem;
+}
+
+
+
+
+.magis-table-row td {
+	font-size: 0.88rem;
+}
+
+.magis-table-row td .magis-table-row-options {
+		display: none;
+		font-size: 0.78rem;
+}
+
+.magis-table-row:hover td .magis-table-row-options {
+		display: inline;
 }
