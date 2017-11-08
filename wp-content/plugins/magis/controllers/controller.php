@@ -7,4 +7,9 @@ class MagisController {
 		parse_str($url_parts['query'], $query);
 		return $query[$key];
 	}
+
+	function _show_error($msg) {
+		$error = new WP_Error('empty_error', __($msg, 'magis'));
+		wp_die($error->get_error_message(), __('CustomForm Error', 'magis'));
+	}
 }

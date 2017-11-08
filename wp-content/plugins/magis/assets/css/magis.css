@@ -127,3 +127,20 @@ input[type=submit] {
 .magis-table-row:hover td .magis-table-row-options {
 		display: inline;
 }
+
+
+
+
+.magis-projector-panel {
+	position: relative;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+	padding: 2rem 1rem 1rem 1rem;
+	margin-bottom: 2rem;
+}
+
+.magis-projector-title {
+	position: absolute;
+	background-color: white;
+	top: -10px;
+}

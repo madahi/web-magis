@@ -43,17 +43,18 @@ CREATE TABLE `magis_citas` (
 	FOREIGN KEY (id_cliente) REFERENCES magis_clientes(id)
 );
 
-CREATE TABLE `magis_citas` (
+CREATE TABLE `magis_promotores` (
 	`id` MEDIUMINT NOT NULL AUTO_INCREMENT,
 	`ci` VARCHAR(24) UNIQUE NOT NULL,
 	`nombre` VARCHAR(256) NOT NULL,
-	`telefono` VARCHAR(16) NOT NULL,
 	`direccion` VARCHAR(256) NOT NULL,
+	`telefono` VARCHAR(16) NOT NULL,
+	`estado` VARCHAR(64) NOT NULL,
 
 	`ci_garante` VARCHAR(24) UNIQUE NOT NULL,
 	`nombre_garante` VARCHAR(256) NOT NULL,
-	`telefono_garante` VARCHAR(16) NOT NULL,
 	`direccion_garante` VARCHAR(256) NOT NULL,
+	`telefono_garante` VARCHAR(16) NOT NULL,
 
 	`fecha_creacion` DATETIME NOT NULL,
 	`fecha_modificacion` DATETIME NOT NULL,
