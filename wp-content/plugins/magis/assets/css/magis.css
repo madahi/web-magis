@@ -120,16 +120,30 @@ input[type=submit] {
 }
 
 .magis-table-row td .magis-table-row-options {
-		display: none;
-		font-size: 0.78rem;
+	display: none;
+	font-size: 0.78rem;
+}
+.magis-table-row td .magis-table-row-options a {
+	padding-right: 0.6rem;
 }
 
 .magis-table-row:hover td .magis-table-row-options {
-		display: inline;
+	display: inline;
 }
 
 
 
+
+/**/
+
+.magis-projector-table-container {
+	width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+.magis-projector-table {
+	white-space: nowrap;
+}
 
 .magis-projector-panel {
 	position: relative;

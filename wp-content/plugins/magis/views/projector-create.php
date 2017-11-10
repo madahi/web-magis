@@ -8,6 +8,15 @@
 		</div>
 
 		<div class="input-group">
+			<select name="projector-status" placeholder="Estado" required>
+				<option value="Hábil">Hábil</option>
+				<option value="Inhábil">Inhábil</option>
+			</select>
+			<label class="input-label" for="projector-status">Estado</label>
+			<span class="input-description">Seleccione un estado</span>
+		</div>
+
+		<div class="input-group">
 			<input name="projector-ci" type="text" placeholder="Cédula de Identidad" required/>
 			<label class="input-label" for="projector-ci">Cédula de Identidad</label>
 			<span class="input-description">Introduzca el número de cédula de identidad del promotor</span>

@@ -24,6 +24,7 @@ require 'controllers/schedule.php';
 require 'controllers/projector.php';
 
 require 'models/schedules.php';
+require 'models/projectors.php';
 
 class Magis
 {
@@ -48,13 +49,6 @@ class Magis
 			if (wp_verify_nonce($_POST['nonce_custom_form'], 'magis_meeting_form')) {
                 die('No estas autorizado para realizar esta acción.');
             } else {
-				/*if (strcmp($_POST['nonce_custom_form'], 'magis_meeting_form') === 0) {
-					//$this->meeting_form_post();
-					$this->meeting->create_post();
-				} else {
-					die('Wrong action.');
-				}*/
-
 				switch($_POST['nonce_custom_form']) {
 				case 'magis_meeting_create_form':
 					$this->meeting->create_post();
@@ -70,6 +64,10 @@ class Magis
         }
 	}
 
+	function install() {
+		$this->projector->install();
+	}
+
 	function enqueue_scripts() {
 		wp_enqueue_style('magis-style', plugin_dir_url( __FILE__ ) . 'assets/css/magis.css', false, '1.1', 'all');
 		wp_enqueue_script('magis-script', plugin_dir_url( __FILE__ ) . 'assets/js/magis.js', array(), '1.1', true);
@@ -77,3 +75,4 @@ class Magis
 }
 
 $MagisPlugin = new Magis();
+register_activation_hook( __FILE__, array($MagisPlugin,'install') );

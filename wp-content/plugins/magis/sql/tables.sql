@@ -51,7 +51,7 @@ CREATE TABLE `magis_promotores` (
 	`telefono` VARCHAR(16) NOT NULL,
 	`estado` VARCHAR(64) NOT NULL,
 
-	`ci_garante` VARCHAR(24) UNIQUE NOT NULL,
+	`ci_garante` VARCHAR(24) NOT NULL,
 	`nombre_garante` VARCHAR(256) NOT NULL,
 	`direccion_garante` VARCHAR(256) NOT NULL,
 	`telefono_garante` VARCHAR(16) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `magis_promotores` (
 	`fecha_modificacion` DATETIME NOT NULL,
 
 	PRIMARY KEY (id)
-};
+);
 
 INSERT INTO magis_cronograma_citas VALUES(default, 'Viernes', '8:00 am - 11:00 am', 'publish', 301, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO magis_cronograma_citas VALUES(default, 'Viernes', '14:00 - 16:00', 'publish', 301, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
