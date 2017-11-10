@@ -1,5 +1,5 @@
 <form method="post" action="">
-	<input name="nonce_custom_form" value="magis_schedule_form" type="hidden"/>
+	<input name="nonce_custom_form" value="magis_schedule_create_form" type="hidden"/>
 
 
 	<div class="input-group">
@@ -45,7 +45,7 @@
 	<div class="input-group">
 		<select name="schedule-projector" placeholder="Promotor" required>
 			<?php foreach($projectors as &$projector) { ?>
-				<option value="<?php echo $projector->id; ?>"> <?php echo $projector->nombre; ?></option>
+				<option value="<?php echo $projector->id; ?>"> <?php echo $projector->nombre . ' - ' . $projector->ci; ?></option>
 			<?php } ?>
 		</select>
 		<label class="input-label" for="schedule-projector">Seleccione el promotor</label>

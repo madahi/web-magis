@@ -20,28 +20,25 @@
 
 require 'controllers/controller.php';
 require 'controllers/meeting.php';
-require 'controllers/schedule.php';
-require 'controllers/projector.php';
 
-require 'models/schedules.php';
+require 'controllers/projector.php';
+require 'controllers/schedule.php';
+
 require 'models/projectors.php';
+require 'models/schedules.php';
 
 class Magis
 {
 	public function __construct() {
-		require 'api/cronograma-citas.php';
-
-		add_action( 'rest_api_init', function () {
-			$api_controller = new MAGIS_ApiCronogramaCitas();
-			$api_controller->register_routes();
-		});
+		add_action('rest_api_init', array($this, 'rest_api_init'));
 
 		add_action('init', array($this, 'init'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
 		$this->meeting = new MagisMeeting();
-		$this->schedule = new MagisSchedule();
+		
 		$this->projector = new MagisProjector();
+		$this->schedule = new MagisSchedule();
 	}
 
 	public function init() {
@@ -54,7 +51,10 @@ class Magis
 					$this->meeting->create_post();
 					break;
 				case 'magis_projector_create_form':
-					$this->projector->create_post();
+					$this->projector->create_post($_POST);
+					break;
+				case 'magis_schedule_create_form':
+					$this->schedule->create_post($_POST);
 					break;
 				default:
 					die('Wrong action.');
@@ -64,8 +64,20 @@ class Magis
         }
 	}
 
+	function rest_api_init() {
+		/*require 'api/cronograma-citas.php';
+		$api_cronograma_controller = new MAGIS_ApiCronogramaCitas();
+		$api_cronograma_controller->register_routes();*/
+
+		require 'api/schedule.php';
+		$api_schedule_controller = new MagisApiSchedule();
+	}
+
 	function install() {
 		$this->projector->install();
+		$this->schedule->install();
+
+		add_role('secretary_role', 'Secretario/a', array('read' => true, 'level_0' => true));
 	}
 
 	function enqueue_scripts() {

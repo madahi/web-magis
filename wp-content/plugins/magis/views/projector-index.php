@@ -1,6 +1,6 @@
 
-<div class="magis-projector-table-container">
-	<table class="magis-projector-table">
+<div class="magis-table-container">
+	<table class="magis-table">
 		<thead>
 			<tr>
 				<?php foreach($projectors['columns'] as &$col) { ?>

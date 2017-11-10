@@ -15,12 +15,22 @@ class MagisProjector extends MagisController
 	}
 
 	function index() {
-		$projectors = $this->projectorsModel->all_prety();
-		require plugin_dir_path( __FILE__ ) . '../views/projector-index.php';
+		$user = wp_get_current_user();
+		if(in_array("secretary_role", $user->roles)) {
+			$projectors = $this->projectorsModel->all_prety();
+			require plugin_dir_path( __FILE__ ) . '../views/projector-index.php';
+		}else{
+			wp_redirect(home_url());
+		}
 	}
 
 	function create_form($params) {
-		require plugin_dir_path( __FILE__ ) . '../views/projector-create.php';
+		$user = wp_get_current_user();
+		if(in_array("secretary_role", $user->roles)) {
+			require plugin_dir_path( __FILE__ ) . '../views/projector-create.php';
+		}else{
+			wp_redirect(home_url());
+		}
 	}
 
 	function create_post() {
@@ -41,6 +51,12 @@ class MagisProjector extends MagisController
 
 	private function _validate_post() {
 		$data = new projectorData();
+
+		$user = wp_get_current_user();
+		if(!in_array("secretary_role", $user->roles)) {
+			$data->validation_message = 'No tienes permiso para realizar esta acción.';
+			return $data;
+		}
 
 		if(empty($_POST['projector-status'])) {
 			$data->validation_message = 'Por favor ingrese el estado del promotor.';
