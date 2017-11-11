@@ -1,0 +1,193 @@
+
+
+
+.input-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem; }
+
+	.input-group .input-label {
+		order: -1;
+		font-size: 1.1rem;
+		font-weight: bold;
+		color: #424242; }
+
+	.input-group .input-description {
+		font-size: 0.8rem;
+		color: gray;}
+
+	.input-group input[type=text],
+	.input-group input[type=password],
+	.input-group input[type=email],
+	.input-group input[type=date] {
+		width: 100%;
+		box-sizing: border-box;
+		border: 1px solid lightgrey;
+		border-radius: 3px;
+		font-size: 14px;
+		background-color: white;
+		padding: 10px 10px 10px 10px;
+		margin: 0.2rem 0 0.2rem 0; }
+
+	.input-group input[type=text]:focus,
+	.input-group input[type=password]:focus,
+	.input-group input[type=email]:focus
+	.input-group input[type=date]:focus {
+		border: 1px solid #00b0ff; }
+
+	.input-group input[type=text]:focus + .input-label,
+	.input-group input[type=password]:focus + .input-label,
+	.input-group input[type=email]:focus + .input-label
+	.input-group input[type=date]:focus + .input-label {
+		color: #00b0ff; }
+
+
+	.input-group select {
+		width: 100%;
+		box-sizing: border-box;
+		border: 1px solid lightgrey;
+		border-radius: 3px;
+		font-size: 14px;
+		background-color: white;
+		padding: 10px 10px 10px 10px;
+		margin: 0.2rem 0 0.2rem 0; }
+	.input-group select:focus {
+		border: 1px solid #00b0ff; }
+	.input-group select:focus + .input-label {
+		color: #00b0ff; }
+
+	.input-group ul {
+		display: inline;
+		list-style-type: none !important;
+		padding: 0 0 0 1rem !important; }
+			.input-group ul li .radio-label {
+				font-size: 1.05rem;
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+input[type=submit] {
+	background-color: #00b0ff;
+	border: none;
+	border-radius: 3px;
+	font-family: Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+	padding: 12px 10px;
+	margin-bottom: 0.7rem;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 16px;
+	-webkit-tap-highlight-color: transparent;
+	cursor: pointer;
+	box-shadow: 2px 2px 10px #888888;
+	width: 100%;
+}
+
+
+
+
+
+
+
+.magis-meeting-date-card {
+	border-radius: 3px;
+	border: 1px solid lightgrey;
+	padding: 1rem;
+}
+
+.magis-meeting-date-title {
+	margin-bottom: 1rem;
+}
+
+.magis-meeting-date-label {
+	padding-bottom: 0.5rem;
+}
+
+
+
+
+.magis-table-container {
+	width: 100%;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+.magis-table {
+	white-space: nowrap;
+}
+
+.magis-table-row td {
+	font-size: 0.88rem;
+}
+
+.magis-table-row td .magis-table-row-options {
+	display: none;
+	font-size: 0.78rem;
+}
+.magis-table-row td .magis-table-row-options a {
+	padding-right: 0.6rem;
+}
+
+.magis-table-row:hover td .magis-table-row-options {
+	display: inline;
+}
+
+.magis-button {
+	background-color: #00b0ff;
+	border: none;
+	border-radius: 3px;
+	font-family: Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+	padding: 12px 10px;
+	margin-bottom: 0.7rem;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 16px;
+	-webkit-tap-highlight-color: transparent;
+	cursor: pointer;
+	box-shadow: 2px 2px 10px #888888;
+}
+
+
+
+
+
+
+.magis-user-panel {
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+
+
+
+/**/
+
+.magis-projector-panel {
+	position: relative;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+	padding: 2rem 1rem 1rem 1rem;
+	margin-bottom: 2rem;
+}
+
+.magis-projector-title {
+	position: absolute;
+	background-color: white;
+	top: -10px;
+}
