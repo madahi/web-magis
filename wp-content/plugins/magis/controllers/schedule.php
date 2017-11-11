@@ -16,7 +16,7 @@ class MagisSchedule extends MagisController
 
 	function index($params) {
 		$user = wp_get_current_user();
-		if(in_array("secretary_role", $user->roles)) {
+		if(in_array("secretary_role", $user->roles) || in_array("administrator", $user->roles)) {
 			$schedules = $this->schedulesModel->all_prety();
 			require plugin_dir_path( __FILE__ ) . '../views/schedule-index.php';
 		}else{
@@ -26,7 +26,7 @@ class MagisSchedule extends MagisController
 
 	function create_form($params) {
 		$user = wp_get_current_user();
-		if(in_array("secretary_role", $user->roles)) {
+		if(in_array("secretary_role", $user->roles) || in_array("administrator", $user->roles)) {
 			global $wpdb;
 
 			$projects = $wpdb->get_results("SELECT ID AS id, post_title AS nombre FROM wp_posts WHERE (post_type='project') AND (post_status='publish')");
@@ -72,7 +72,7 @@ class MagisSchedule extends MagisController
 		$data = new ScheduleData();
 
 		$user = wp_get_current_user();
-		if(!in_array("secretary_role", $user->roles)) {
+		if(!in_array("secretary_role", $user->roles) && !in_array("administrator", $user->roles)) {
 			$data->validation_message = 'No tienes permiso para realizar esta acción.';
 			return $data;
 		}
@@ -118,7 +118,7 @@ class MagisSchedule extends MagisController
 }
 
 class ScheduleData {
-	public $is_valid = true;
+	public $is_valid = false;
 	public $validation_message = '';
 	public $post = array();
 }

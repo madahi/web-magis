@@ -32,13 +32,19 @@ class MagisApiSchedule extends MagisController
 
 	function publish($request) {
 		$schedule_id = $request['schedule_id'];
-		$this->schedulesModel->update(array('estado' => 'Publicado'), array('id' => $schedule_id));
+		$this->schedulesModel->update(
+			array('estado' => 'Publicado', 'fecha_modificacion' => current_time('mysql')),
+			array('id' => $schedule_id)
+		);
 		wp_redirect('/lista-cronogramas-citas');
 	}
 
 	function unpublish($request) {
 		$schedule_id = $request['schedule_id'];
-		$this->schedulesModel->update(array('estado' => 'No publicado'), array('id' => $schedule_id));
+		$this->schedulesModel->update(
+			array('estado' => 'No publicado', 'fecha_modificacion' => current_time('mysql')),
+			array('id' => $schedule_id)
+		);
 		wp_redirect('/lista-cronogramas-citas');
 	}
 }

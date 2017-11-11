@@ -1,6 +1,6 @@
 
 <div class="magis-table-container">
-	<a href="<?php echo wp_logout_url( home_url() ); ?>">Logout</a>
+	<a class="magis-button" href="/registrar-cronograma-cita">Agregar nuevo</a>
 	<table class="magis-table">
 		<tr>
 			<?php foreach($schedules['columns'] as &$col) { ?>

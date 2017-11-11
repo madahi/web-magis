@@ -140,6 +140,36 @@ input[type=submit] {
 	display: inline;
 }
 
+.magis-button {
+	background-color: #00b0ff;
+	border: none;
+	border-radius: 3px;
+	font-family: Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+	padding: 12px 10px;
+	margin-bottom: 0.7rem;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 16px;
+	-webkit-tap-highlight-color: transparent;
+	cursor: pointer;
+	box-shadow: 2px 2px 10px #888888;
+}
+
+
+
+
+
+
+.magis-user-panel {
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
 
 
 

@@ -1,5 +1,6 @@
 
 <div class="magis-table-container">
+	<a class="magis-button" href="/registrar-promotor">Agregar nuevo</a>
 	<table class="magis-table">
 		<thead>
 			<tr>

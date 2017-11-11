@@ -16,25 +16,25 @@ class MagisProjector extends MagisController
 
 	function index() {
 		$user = wp_get_current_user();
-		if(in_array("secretary_role", $user->roles)) {
+		if(in_array("secretary_role", $user->roles) || in_array("administrator", $user->roles)) {
 			$projectors = $this->projectorsModel->all_prety();
 			require plugin_dir_path( __FILE__ ) . '../views/projector-index.php';
-		}else{
+		} else {
 			wp_redirect(home_url());
 		}
 	}
 
 	function create_form($params) {
 		$user = wp_get_current_user();
-		if(in_array("secretary_role", $user->roles)) {
+		if(in_array("secretary_role", $user->roles) || in_array("administrator", $user->roles)) {
 			require plugin_dir_path( __FILE__ ) . '../views/projector-create.php';
 		}else{
 			wp_redirect(home_url());
 		}
 	}
 
-	function create_post() {
-		$data = $this->_validate_post();
+	function create_post($post) {
+		$data = $this->_validate_post($post);
 		
 		if($data->is_valid) {
 			$data->post['fecha_creacion'] = current_time('mysql');
@@ -49,11 +49,11 @@ class MagisProjector extends MagisController
 		}
 	}
 
-	private function _validate_post() {
-		$data = new projectorData();
+	private function _validate_post($post) {
+		$data = new ProjectorData();
 
 		$user = wp_get_current_user();
-		if(!in_array("secretary_role", $user->roles)) {
+		if(!in_array("secretary_role", $user->roles) && !in_array("administrator", $user->roles)) {
 			$data->validation_message = 'No tienes permiso para realizar esta acción.';
 			return $data;
 		}
@@ -127,8 +127,8 @@ class MagisProjector extends MagisController
 }
 
 
-class projectorData {
-	public $is_valid = true;
+class ProjectorData {
+	public $is_valid = false;
 	public $validation_message = '';
 	public $post = array();
 }

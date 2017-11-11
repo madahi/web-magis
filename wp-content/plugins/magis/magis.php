@@ -21,6 +21,7 @@
 require 'controllers/controller.php';
 require 'controllers/meeting.php';
 
+require 'controllers/user.php';
 require 'controllers/projector.php';
 require 'controllers/schedule.php';
 
@@ -30,13 +31,14 @@ require 'models/schedules.php';
 class Magis
 {
 	public function __construct() {
+		add_action('init', array($this, 'init'));
 		add_action('rest_api_init', array($this, 'rest_api_init'));
 
-		add_action('init', array($this, 'init'));
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
 		$this->meeting = new MagisMeeting();
 		
+		$this->user = new MagisUser();
 		$this->projector = new MagisProjector();
 		$this->schedule = new MagisSchedule();
 	}
@@ -47,6 +49,9 @@ class Magis
                 die('No estas autorizado para realizar esta acción.');
             } else {
 				switch($_POST['nonce_custom_form']) {
+				case 'magis_user_signin':
+					$this->user->signin_post($_POST);
+					break;
 				case 'magis_meeting_create_form':
 					$this->meeting->create_post();
 					break;
