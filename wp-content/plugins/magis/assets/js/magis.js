@@ -2,7 +2,7 @@
 function onLoadMeetingDates(){
 	var xhttp = new XMLHttpRequest(),
 		mmp = document.getElementById('magis_meeting_project'),
-		mmd = document.getElementById('magis_meeting_date');
+		mms = document.getElementById('magis_meeting_schedule');
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
@@ -10,13 +10,13 @@ function onLoadMeetingDates(){
 			if(this.status == 200) {
 				var options = '';
 				data.forEach(function(item) {
-					options = options + '<option value="' + item.id + '">' + item.dia + ' - ' + item.periodo + '</option>';
-				}, this);;
-				mmd.innerHTML = options;
+					options = options + '<option value="' + item.id + '">' + item.dia + ' de ' + item.hora_inicio + ' a ' + item.hora_fin + '</option>';
+				}, this);
+				mms.innerHTML = options;
 			}
 		}
 	};
-	xhttp.open("GET", "/wp-json/magis/v1/cronograma-citas/" + mmp.value, true);
+	xhttp.open("GET", "/wp-json/magis/v1/cronogramas-citas/project_id=" + mmp.value, true);
 	xhttp.send();
 }
 

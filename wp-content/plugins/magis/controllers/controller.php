@@ -13,3 +13,9 @@ class MagisController {
 		wp_die($error->get_error_message(), __('CustomForm Error', 'magis'));
 	}
 }
+
+class ValidationData {
+	public $is_valid = false;
+	public $validation_message = '';
+	public $post = array();
+}

@@ -57,7 +57,7 @@ class MagisUser extends MagisController
 	}
 
 	private function _validate_post($post) {
-		$data = new UserData();
+		$data = new ValidationData();
 
 		if(empty($post['user-name'])) {
 			$data->validation_message = 'Por favor ingrese el nombre de usuario.';
@@ -76,10 +76,4 @@ class MagisUser extends MagisController
 		$data->is_valid = true;
 		return $data;
 	}
-}
-
-class UserData {
-	public $is_valid = false;
-	public $validation_message = '';
-	public $post = array();
 }

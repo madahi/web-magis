@@ -35,7 +35,7 @@ class MagisSchedule extends MagisController
 			$periods = $this->schedulesModel->get_all_enabled_periods();
 
 			require plugin_dir_path( __FILE__ ) . '../views/schedule-create.php';
-		}else{
+		} else {
 			wp_redirect(home_url());
 		}
 	}
@@ -69,7 +69,7 @@ class MagisSchedule extends MagisController
 	}
 
 	private function _validate_post($post) {
-		$data = new ScheduleData();
+		$data = new ValidationData();
 
 		$user = wp_get_current_user();
 		if(!in_array("secretary_role", $user->roles) && !in_array("administrator", $user->roles)) {
@@ -115,10 +115,4 @@ class MagisSchedule extends MagisController
 		$data->is_valid = true;
 		return $data;
 	}
-}
-
-class ScheduleData {
-	public $is_valid = false;
-	public $validation_message = '';
-	public $post = array();
 }

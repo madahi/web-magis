@@ -1,5 +1,5 @@
 <form method="post" action="">
-	<input name="nonce_custom_form" value="magis_meeting_form" type="hidden"/>
+	<input name="nonce_custom_form" value="magis_meeting_create_form" type="hidden"/>
 
 	<div class="input-group">
 		<input name="meeting-uci" type="text" placeholder="Cédula de Identidad" required/>
@@ -40,9 +40,9 @@
 	</div>
 
 	<div class="input-group">
-		<select id="magis_meeting_date" name="meeting-date" placeholder="Día y hora de la cita" required>
+		<select id="magis_meeting_schedule" name="meeting-schedule" placeholder="Día y hora de la cita" required>
 		</select>
-		<label class="input-label" for="meeting-date">Día y hora de la cita</label>
+		<label class="input-label" for="meeting-schedule">Día y hora de la cita</label>
 		<span class="input-description">Seleccione el día y la hora de la cita</span>
 	</div>
 

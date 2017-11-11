@@ -6,6 +6,7 @@ CREATE TABLE `magis_clientes` (
 	`nombre` VARCHAR(256) NOT NULL,
 	`telefono` VARCHAR(16) NOT NULL,
 	`ciudad` VARCHAR(256) NOT NULL,
+	`estado` VARCHAR(64) NOT NULL,
 
 	`fecha_creacion` DATETIME NOT NULL,
 	`fecha_modificacion` DATETIME NOT NULL,
@@ -18,7 +19,7 @@ CREATE TABLE `magis_citas` (
 	`hash` VARCHAR(32) UNIQUE NOT NULL,
 	`id_cronograma` MEDIUMINT NOT NULL,
 	`id_cliente` MEDIUMINT NOT NULL,
-	`estado` VARCHAR(24) NOT NULL,
+	`estado` VARCHAR(64) NOT NULL,
 
 	`fecha_creacion` DATETIME NOT NULL,
 

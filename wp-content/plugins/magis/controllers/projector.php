@@ -37,20 +37,15 @@ class MagisProjector extends MagisController
 		$data = $this->_validate_post($post);
 		
 		if($data->is_valid) {
-			$data->post['fecha_creacion'] = current_time('mysql');
-			$data->post['fecha_modificacion'] = current_time('mysql');
-
 			$this->projectorsModel->insert($data->post);
-
 			wp_redirect('/lista-de-promotores');
 		} else {
-			
 			$this->_show_error($data->validation_message);
 		}
 	}
 
 	private function _validate_post($post) {
-		$data = new ProjectorData();
+		$data = new ValidationData();
 
 		$user = wp_get_current_user();
 		if(!in_array("secretary_role", $user->roles) && !in_array("administrator", $user->roles)) {
@@ -124,11 +119,4 @@ class MagisProjector extends MagisController
 		$data->is_valid = true;
 		return $data;
 	}
-}
-
-
-class ProjectorData {
-	public $is_valid = false;
-	public $validation_message = '';
-	public $post = array();
 }

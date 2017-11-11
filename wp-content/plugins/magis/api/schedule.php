@@ -28,6 +28,14 @@ class MagisApiSchedule extends MagisController
 				)
         	)
 		);
+		register_rest_route( $this->namespace, '/' . $this->resource_name . '/project_id=(?P<project_id>[a-zA-Z0-9-]+)',
+			array(
+				array(
+					'methods'   => 'GET',
+					'callback'  => array($this, 'schedules_for_project'),
+				)
+        	)
+		);
 	}
 
 	function publish($request) {
@@ -46,5 +54,12 @@ class MagisApiSchedule extends MagisController
 			array('id' => $schedule_id)
 		);
 		wp_redirect('/lista-cronogramas-citas');
+	}
+
+	function schedules_for_project($request) {
+		$project_id = $request['project_id'];
+		global $wpdb;
+		$results = $wpdb->get_results("SELECT id, dia, hora_inicio, hora_fin FROM magis_cronograma_citas WHERE estado = 'Publicado' AND id_proyecto = " . $project_id);
+		return $results;
 	}
 }

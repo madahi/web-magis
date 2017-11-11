@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Magis
  * Plugin URI: https://magis.com/
- * Description: Gestión de citas y usuarios para la empresa constructora MAGIS.
+ * Description: Gestión de citas para la empresa constructora MAGIS.
  * Version: 0.1.1
  * Author: Juan Carlos Labrandero
  * Author URI: https://magis.com
@@ -19,14 +19,16 @@
 
 
 require 'controllers/controller.php';
-require 'controllers/meeting.php';
 
 require 'controllers/user.php';
 require 'controllers/projector.php';
 require 'controllers/schedule.php';
+require 'controllers/meeting.php';
 
 require 'models/projectors.php';
 require 'models/schedules.php';
+require 'models/clients.php';
+require 'models/meetings.php';
 
 class Magis
 {
@@ -36,11 +38,10 @@ class Magis
 
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
 
-		$this->meeting = new MagisMeeting();
-		
 		$this->user = new MagisUser();
 		$this->projector = new MagisProjector();
 		$this->schedule = new MagisSchedule();
+		$this->meeting = new MagisMeeting();
 	}
 
 	public function init() {
@@ -52,14 +53,14 @@ class Magis
 				case 'magis_user_signin':
 					$this->user->signin_post($_POST);
 					break;
-				case 'magis_meeting_create_form':
-					$this->meeting->create_post();
-					break;
 				case 'magis_projector_create_form':
 					$this->projector->create_post($_POST);
 					break;
 				case 'magis_schedule_create_form':
 					$this->schedule->create_post($_POST);
+					break;
+				case 'magis_meeting_create_form':
+					$this->meeting->create_post($_POST);
 					break;
 				default:
 					die('Wrong action.');
@@ -70,10 +71,6 @@ class Magis
 	}
 
 	function rest_api_init() {
-		/*require 'api/cronograma-citas.php';
-		$api_cronograma_controller = new MAGIS_ApiCronogramaCitas();
-		$api_cronograma_controller->register_routes();*/
-
 		require 'api/schedule.php';
 		$api_schedule_controller = new MagisApiSchedule();
 	}
@@ -81,6 +78,7 @@ class Magis
 	function install() {
 		$this->projector->install();
 		$this->schedule->install();
+		$this->meeting->install();
 
 		add_role('secretary_role', 'Secretario/a', array('read' => true, 'level_0' => true));
 	}
@@ -92,4 +90,4 @@ class Magis
 }
 
 $MagisPlugin = new Magis();
-register_activation_hook( __FILE__, array($MagisPlugin,'install') );
+register_activation_hook( __FILE__, array($MagisPlugin, 'install'));

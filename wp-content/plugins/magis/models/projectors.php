@@ -23,6 +23,9 @@ class MagisProjectorsModel
 
 	public function insert($row) {
 		global $wpdb;
+
+		$row['fecha_creacion'] = current_time('mysql');
+		$row['fecha_modificacion'] = current_time('mysql');
 		$wpdb->insert($this->table, $row);
 	}
 

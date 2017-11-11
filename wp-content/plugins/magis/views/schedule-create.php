@@ -13,11 +13,12 @@
 	</div>
 
 	<div class="input-group">
-		<select name="schedule-day" placeholder="Seleccione el día" required>
+		<!--<select name="schedule-day" placeholder="Seleccione el día" required>
 			<?php foreach($days as &$day) { ?>
 				<option> <?php echo $day; ?></option>
 			<?php } ?>
-		</select>
+		</select>-->
+		<input name="schedule-day" type="date" placeholder="Seleccione el día" required/>
 		<label class="input-label" for="schedule-day">Seleccione el día</label>
 		<span class="input-description">Seleccione el día de la cita</span>
 	</div>
