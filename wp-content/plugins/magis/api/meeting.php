@@ -21,6 +21,31 @@ class MagisApiMeeting extends MagisController
 				)
         	)
 		);
+
+		register_rest_route($this->namespace, '/' . $this->resource_name . '/confirmar/meeting_id=(?P<meeting_id>[a-zA-Z0-9-]+)',
+			array(
+				array(
+					'methods'   => 'GET',
+					'callback'  => array($this, 'status_confirm'),
+				)
+        	)
+		);
+		register_rest_route($this->namespace, '/' . $this->resource_name . '/cancelar/meeting_id=(?P<meeting_id>[a-zA-Z0-9-]+)',
+			array(
+				array(
+					'methods'   => 'GET',
+					'callback'  => array($this, 'status_cancel'),
+				)
+        	)
+		);
+		register_rest_route($this->namespace, '/' . $this->resource_name . '/pendiente/meeting_id=(?P<meeting_id>[a-zA-Z0-9-]+)',
+			array(
+				array(
+					'methods'   => 'GET',
+					'callback'  => array($this, 'status_pending'),
+				)
+        	)
+		);
 	}
 
 	function filter_for($request) {
@@ -38,5 +63,33 @@ class MagisApiMeeting extends MagisController
 				'message' => 'No se encontró el cliente'
 			);
 		}
+	}
+
+
+	function status_confirm($request) {
+		$meeting_id = $request['meeting_id'];
+		$this->meetingsModel->update(
+			array('estado' => 'Confirmado', 'fecha_modificacion' => current_time('mysql')),
+			array('id' => $meeting_id)
+		);
+		wp_redirect('/lista-citas-programadas');
+	}
+
+	function status_cancel($request) {
+		$meeting_id = $request['meeting_id'];
+		$this->meetingsModel->update(
+			array('estado' => 'Cancelado', 'fecha_modificacion' => current_time('mysql')),
+			array('id' => $meeting_id)
+		);
+		wp_redirect('/lista-citas-programadas');
+	}
+
+	function status_pending($request) {
+		$meeting_id = $request['meeting_id'];
+		$this->meetingsModel->update(
+			array('estado' => 'Pendiente', 'fecha_modificacion' => current_time('mysql')),
+			array('id' => $meeting_id)
+		);
+		wp_redirect('/lista-citas-programadas');
 	}
 }
