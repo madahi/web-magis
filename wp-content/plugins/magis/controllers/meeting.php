@@ -3,8 +3,10 @@
 class MagisMeeting extends MagisController
 {
 	public function __construct() {
+		add_shortcode('magis_meeting_index', array($this, 'index'));
 		add_shortcode('magis_meeting_create', array($this, 'create_form'));
 		add_shortcode('magis_meeting_payload', array($this, 'payload'));
+		add_shortcode('magis_meeting_filter', array($this, 'filter'));
 
 		$this->clientsModel = new MagisClientsModel();
 		$this->meetingsModel = new MagisMeetingsModel();
@@ -13,6 +15,16 @@ class MagisMeeting extends MagisController
 	public function install() {
 		$this->clientsModel->install();
 		$this->meetingsModel->install();
+	}
+
+	function index() {
+		$user = wp_get_current_user();
+		if(in_array("secretary_role", $user->roles) || in_array("administrator", $user->roles)) {
+			$meetings = $this->meetingsModel->all_prety();
+			require plugin_dir_path( __FILE__ ) . '../views/meeting-index.php';
+		} else {
+			wp_redirect(home_url());
+		}
 	}
 
 	function create_form($params) {
@@ -49,6 +61,10 @@ class MagisMeeting extends MagisController
 				require plugin_dir_path( __FILE__ ) . '../views/meeting-payload.php';
 			}
 		}
+	}
+
+	function filter($params) {
+		require plugin_dir_path( __FILE__ ) . '../views/meeting-filter.php';
 	}
 
 	public function create_post($post) {

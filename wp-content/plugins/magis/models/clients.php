@@ -23,6 +23,11 @@ class MagisClientsModel
 		return $wpdb->get_row('SELECT * FROM ' . $this->table . ' WHERE ci =' . $row['ci']);
 	}
 
+	public function get_by_ci($ci) {
+		global $wpdb;
+		return $wpdb->get_row("SELECT * FROM $this->table WHERE ci='" . $ci ."'");
+	}
+
 	public function install() {
 		global $wpdb;
 

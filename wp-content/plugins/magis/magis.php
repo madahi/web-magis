@@ -73,6 +73,12 @@ class Magis
 	function rest_api_init() {
 		require 'api/schedule.php';
 		$api_schedule_controller = new MagisApiSchedule();
+
+		require 'api/client.php';
+		$api_client_controller = new MagisApiClient();
+
+		require 'api/meeting.php';
+		$api_meeting_controller = new MagisApiMeeting();
 	}
 
 	function install() {
