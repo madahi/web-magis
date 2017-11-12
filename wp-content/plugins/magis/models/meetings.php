@@ -19,6 +19,15 @@ class MagisMeetingsModel
 		return $wpdb->get_row('SELECT * FROM magis_citas WHERE id =' . $wpdb->insert_id);
 	}
 
+	public function get_for_client($client_id) {
+		global $wpdb;
+		$query =
+			"SELECT wp.post_title AS proyecto, c.estado AS estado, s.dia AS dia, s.hora_inicio AS hora_inicio, s.hora_fin AS hora_fin, c.fecha_creacion AS fecha_creacion ".
+			"FROM $this->table AS c INNER JOIN magis_cronograma_citas s ON c.id_cronograma=s.id INNER JOIN wp_posts AS wp ON s.id_proyecto=wp.ID ".
+			"WHERE id_cliente = '" . $client_id ."'";
+		return $wpdb->get_results($query);
+	}
+
 	public function install() {
 		global $wpdb;
 

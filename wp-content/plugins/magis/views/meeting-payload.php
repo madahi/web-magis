@@ -11,3 +11,6 @@
 
 	<p class="magis-meeting-date-label"><b>Fecha de creación: </b> <span><?php echo $themeeting->fecha_creacion; ?></span></p>
 </div>
+<div>
+	<a class="magis-button" href="/registrar-promotor">Ver mis citas programadas</a>
+</div>

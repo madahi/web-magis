@@ -40,17 +40,52 @@ function onLoadClientData(e) {
 	xhttp.send();
 }
 
+
+function onFilterClientMeetings() {
+	var mmcci = document.getElementById('magis-meeting-client-ci');
+	if(mmcci.value) {
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if(this.readyState == 4) {
+				var data = JSON.parse(xhttp.responseText),
+					mcmr = document.getElementById('magis-client-meetings-rows'),
+					rows = '';
+
+				if((this.status == 200) && (data.meetings)) {
+					data.meetings.forEach(function(item) {
+						rows = rows +
+							'<td>' + item.proyecto + '</td>' +
+							'<td>' + item.estado + '</td>' +
+							'<td>' + item.dia + '</td>' +
+							'<td>' + item.hora_inicio + '</td>' +
+							'<td>' + item.hora_fin + '</td>' +
+							'<td>' + item.fecha_creacion + '</td>';
+					}, this);
+				}
+				mcmr.innerHTML = rows;
+			}
+		};
+		xhttp.open("GET", "/wp-json/magis/v1/citas/buscar-de-cliente/client_ci=" + mmcci.value, true);
+		xhttp.send();
+	}
+}
+
 document.addEventListener('DOMContentLoaded', function(){
 	var mmp = document.getElementById('magis_meeting_project');
-
 	if(mmp) {
 		mmp.addEventListener('change', onLoadMeetingDates);
 		onLoadMeetingDates();
 	}
 
-	var mmuci = document.getElementById('magis_meeting_uci');
 
+	var mmuci = document.getElementById('magis_meeting_uci');
 	if(mmuci) {
 		mmuci.addEventListener('change', onLoadClientData);
+	}
+
+
+	var mmfbtn = document.getElementById('magis-meeting-filter-btn');
+	if(mmfbtn) {
+		mmfbtn.addEventListener('click', onFilterClientMeetings);
 	}
 });

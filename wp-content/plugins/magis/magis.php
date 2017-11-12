@@ -76,6 +76,9 @@ class Magis
 
 		require 'api/client.php';
 		$api_client_controller = new MagisApiClient();
+
+		require 'api/meeting.php';
+		$api_meeting_controller = new MagisApiMeeting();
 	}
 
 	function install() {

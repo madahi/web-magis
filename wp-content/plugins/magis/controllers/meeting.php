@@ -5,6 +5,7 @@ class MagisMeeting extends MagisController
 	public function __construct() {
 		add_shortcode('magis_meeting_create', array($this, 'create_form'));
 		add_shortcode('magis_meeting_payload', array($this, 'payload'));
+		add_shortcode('magis_meeting_filter', array($this, 'filter'));
 
 		$this->clientsModel = new MagisClientsModel();
 		$this->meetingsModel = new MagisMeetingsModel();
@@ -49,6 +50,10 @@ class MagisMeeting extends MagisController
 				require plugin_dir_path( __FILE__ ) . '../views/meeting-payload.php';
 			}
 		}
+	}
+
+	function filter($params) {
+		require plugin_dir_path( __FILE__ ) . '../views/meeting-filter.php';
 	}
 
 	public function create_post($post) {
