@@ -12,7 +12,10 @@ class MagisUser extends MagisController
 
 	function signin() {
 		if(is_user_logged_in()){
-			wp_redirect('/perfil-usuario');
+			$user = wp_get_current_user();
+			if(!in_array("administrator", $user->roles)) {
+				wp_redirect('/perfil-de-usuario');
+			}
 		} else {
 			require plugin_dir_path( __FILE__ ) . '../views/user-signin.php';
 		}

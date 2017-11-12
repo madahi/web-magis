@@ -16,6 +16,7 @@
 		<h5>Menú de opciones</h5>
 		<div><a href="/lista-de-promotores">Promotores</a></div>
 		<div><a href="/lista-cronogramas-citas">Cronogramas de cita</a></div>
+		<div><a href="/lista-citas-programadas">Citas Programadas</a></div>
 		<div><a href="<?php echo wp_logout_url('/iniciar-sesion'); ?>">Cerrar sesión</a></div>
 	</div>
 </div>
