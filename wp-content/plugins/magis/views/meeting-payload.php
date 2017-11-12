@@ -10,7 +10,7 @@
 	<p class="magis-meeting-date-label"><b>Hora: </b> <span><?php echo 'de '.$schedule->hora_inicio.' a '.$schedule->hora_fin; ?></span></p>
 
 	<p class="magis-meeting-date-label"><b>Fecha de creación: </b> <span><?php echo $themeeting->fecha_creacion; ?></span></p>
-</div>
+</div><br>
 <div>
-	<a class="magis-button" href="/registrar-promotor">Ver mis citas programadas</a>
+	<a class="magis-button" href="/buscar-mis-citas">Ver mis citas programadas</a>
 </div>
