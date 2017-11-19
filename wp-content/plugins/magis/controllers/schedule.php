@@ -62,7 +62,7 @@ class MagisSchedule extends MagisController
 
 			$this->schedulesModel->insert($data->post);
 
-			wp_redirect('/lista-cronogramas-citas');
+			wp_redirect(home_url().'/lista-cronogramas-citas');
 		} else {
 			$this->_show_error($data->validation_message);
 		}

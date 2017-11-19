@@ -38,7 +38,7 @@ class MagisProjector extends MagisController
 		
 		if($data->is_valid) {
 			$this->projectorsModel->insert($data->post);
-			wp_redirect('/lista-de-promotores');
+			wp_redirect(home_url().'/lista-de-promotores');
 		} else {
 			$this->_show_error($data->validation_message);
 		}

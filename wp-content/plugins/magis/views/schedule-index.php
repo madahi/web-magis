@@ -1,6 +1,6 @@
 
 <div class="magis-table-container">
-	<a class="magis-button" href="/registrar-cronograma-cita">Agregar nuevo</a>
+	<a class="magis-button" href="<?php echo home_url().'/registrar-cronograma-cita'; ?>">Agregar nuevo</a>
 	<table class="magis-table">
 		<tr>
 			<?php foreach($schedules['columns'] as &$col) { ?>
@@ -17,17 +17,17 @@
 								<b><?php echo $row->proyecto; ?></b>
 							</div>
 							<div class="magis-table-row-options">
-								<a href="/editar-cronograma-cita/?schedule_id=<?php echo $row->id; ?>"><span>Editar</span></a>
+								<a href="<?php echo home_url().'/editar-cronograma-cita/?schedule_id='.$row->id; ?>"><span>Editar</span></a>
 								<?php
 									switch($row->estado) {
 									case 'No publicado':
 								?>
-										<a href="/wp-json/magis/v1/cronogramas-citas/publicar/schedule_id=<?php echo $row->id; ?>"><span>Publicar</span></a>
+										<a href="<?php echo home_url().'/wp-json/magis/v1/cronogramas-citas/publicar/schedule_id='.$row->id; ?>"><span>Publicar</span></a>
 								<?php
 										break;
 									case 'Publicado':
 								?>
-										<a href="/wp-json/magis/v1/cronogramas-citas/ocultar/schedule_id=<?php echo $row->id; ?>"><span>Ocultar</span></a>
+										<a href="<?php echo home_url().'/wp-json/magis/v1/cronogramas-citas/ocultar/schedule_id='.$row->id; ?>"><span>Ocultar</span></a>
 								<?php
 										break;
 									}

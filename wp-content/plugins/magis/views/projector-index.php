@@ -1,6 +1,6 @@
 
 <div class="magis-table-container">
-	<a class="magis-button" href="/registrar-promotor">Agregar nuevo</a>
+	<a class="magis-button" href="<?php echo home_url().'/registrar-promotor'; ?>">Agregar nuevo</a>
 	<table class="magis-table">
 		<thead>
 			<tr>
@@ -19,8 +19,8 @@
 							<b><?php echo $row->ci; ?></b>
 						</div>
 						<div class="magis-table-row-options">
-							<a href="/editar-promotor/?projector_id=<?php echo $row->id; ?>"><span>Editar</span></a>
-							<a href="/eliminar-promotor/?projector_id=<?php echo $row->id; ?>"><span>Eliminar</span></a>
+							<a href="<?php echo home_url().'/editar-promotor/?projector_id='.$row->id; ?>"><span>Editar</span></a>
+							<a href="<?php echo home_url().'/eliminar-promotor/?projector_id='.$row->id; ?>"><span>Eliminar</span></a>
 						</div>
 					</td>
 

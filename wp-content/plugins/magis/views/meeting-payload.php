@@ -12,5 +12,5 @@
 	<p class="magis-meeting-date-label"><b>Fecha de creación: </b> <span><?php echo $themeeting->fecha_creacion; ?></span></p>
 </div><br>
 <div>
-	<a class="magis-button" href="/buscar-mis-citas">Ver mis citas programadas</a>
+	<a class="magis-button" href="<?php echo home_url().'/buscar-mis-citas'; ?>">Ver mis citas programadas</a>
 </div>

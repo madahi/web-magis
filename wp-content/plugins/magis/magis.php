@@ -90,8 +90,9 @@ class Magis
 	}
 
 	function enqueue_scripts() {
-		wp_enqueue_style('magis-style', plugin_dir_url( __FILE__ ) . 'assets/css/magis.css', false, '1.1', 'all');
-		wp_enqueue_script('magis-script', plugin_dir_url( __FILE__ ) . 'assets/js/magis.js', array(), '1.1', true);
+		$proj_folder = '';
+		wp_enqueue_style('magis-style', $proj_folder . plugin_dir_url( __FILE__ ) . 'assets/css/magis.css', false, '1.1', 'all');
+		wp_enqueue_script('magis-script', $proj_folder . plugin_dir_url( __FILE__ ) . 'assets/js/magis.js', array(), '1.1', true);
 	}
 }
 
