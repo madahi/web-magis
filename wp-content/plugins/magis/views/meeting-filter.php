@@ -10,7 +10,7 @@
 
 			<div>
 				<button id="magis-meeting-filter-btn" class="magis-button" type="button">Buscar</button>
-				<a class="magis-button" href="/programar-cita">Programar nueva cita</a>
+				<a class="magis-button" href="<?php echo home_url().'/programar-cita'; ?>">Programar nueva cita</a>
 			</div>
 		</div>
 	</form>

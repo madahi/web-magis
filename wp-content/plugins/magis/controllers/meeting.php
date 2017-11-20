@@ -75,7 +75,7 @@ class MagisMeeting extends MagisController
 			if($data->is_valid) {
 				$data->post['id_cliente'] = $client->id;
 				$inserted = $this->meetingsModel->insert($data->post);
-				wp_redirect('/programacion-de-cita?meeting_hash_id=' . $inserted->hash);
+				wp_redirect(home_url().'/programacion-de-cita?meeting_hash_id=' . $inserted->hash);
 			} else {
 				$this->_show_error($data->validation_message);
 			}

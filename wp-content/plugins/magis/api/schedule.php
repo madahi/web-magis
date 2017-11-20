@@ -44,7 +44,7 @@ class MagisApiSchedule extends MagisController
 			array('estado' => 'Publicado', 'fecha_modificacion' => current_time('mysql')),
 			array('id' => $schedule_id)
 		);
-		wp_redirect('/lista-cronogramas-citas');
+		wp_redirect(home_url().'/lista-cronogramas-citas');
 	}
 
 	function unpublish($request) {
@@ -53,7 +53,7 @@ class MagisApiSchedule extends MagisController
 			array('estado' => 'No publicado', 'fecha_modificacion' => current_time('mysql')),
 			array('id' => $schedule_id)
 		);
-		wp_redirect('/lista-cronogramas-citas');
+		wp_redirect(home_url().'/lista-cronogramas-citas');
 	}
 
 	function schedules_for_project($request) {

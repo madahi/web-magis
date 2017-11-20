@@ -72,7 +72,7 @@ class MagisApiMeeting extends MagisController
 			array('estado' => 'Confirmado', 'fecha_modificacion' => current_time('mysql')),
 			array('id' => $meeting_id)
 		);
-		wp_redirect('/lista-citas-programadas');
+		wp_redirect(home_url().'/lista-citas-programadas');
 	}
 
 	function status_cancel($request) {
@@ -81,7 +81,7 @@ class MagisApiMeeting extends MagisController
 			array('estado' => 'Cancelado', 'fecha_modificacion' => current_time('mysql')),
 			array('id' => $meeting_id)
 		);
-		wp_redirect('/lista-citas-programadas');
+		wp_redirect(home_url().'/lista-citas-programadas');
 	}
 
 	function status_pending($request) {
@@ -90,6 +90,6 @@ class MagisApiMeeting extends MagisController
 			array('estado' => 'Pendiente', 'fecha_modificacion' => current_time('mysql')),
 			array('id' => $meeting_id)
 		);
-		wp_redirect('/lista-citas-programadas');
+		wp_redirect(home_url().'/lista-citas-programadas');
 	}
 }

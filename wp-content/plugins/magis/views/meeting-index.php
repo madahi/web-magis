@@ -22,17 +22,17 @@
 								switch($row->estado) {
 								case 'Pendiente':
 							?>
-									<a href="/wp-json/magis/v1/citas/confirmar/meeting_id=<?php echo $row->id; ?>"><span>Confirmar</span></a>
+									<a href="<?php echo home_url().'/wp-json/magis/v1/citas/confirmar/meeting_id='.$row->id; ?>"><span>Confirmar</span></a>
 							<?php
 									break;
 								case 'Confirmado':
 							?>
-									<a href="/wp-json/magis/v1/citas/cancelar/meeting_id=<?php echo $row->id; ?>"><span>Cancelar</span></a>
+									<a href="<?php echo home_url().'/wp-json/magis/v1/citas/cancelar/meeting_id='.$row->id; ?>"><span>Cancelar</span></a>
 							<?php
 									break;
 								case 'Cancelado':
 							?>
-									<a href="/wp-json/magis/v1/citas/pendiente/meeting_id=<?php echo $row->id; ?>"><span>Pendiente</span></a>
+									<a href="<?php echo home_url().'/wp-json/magis/v1/citas/pendiente/meeting_id='.$row->id; ?>"><span>Pendiente</span></a>
 							<?php
 									break;
 								}

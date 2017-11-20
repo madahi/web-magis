@@ -14,7 +14,7 @@ class MagisUser extends MagisController
 		if(is_user_logged_in()){
 			$user = wp_get_current_user();
 			if(!in_array("administrator", $user->roles)) {
-				wp_redirect('/perfil-de-usuario');
+				wp_redirect(home_url().'/perfil-de-usuario');
 			}
 		} else {
 			require plugin_dir_path( __FILE__ ) . '../views/user-signin.php';
@@ -40,7 +40,7 @@ class MagisUser extends MagisController
 			*/
 			require plugin_dir_path( __FILE__ ) . '../views/user-profile.php';
 		} else {
-			wp_redirect('/iniciar-sesion');
+			wp_redirect(home_url().'/iniciar-sesion');
 		}
 	}
 
@@ -52,7 +52,7 @@ class MagisUser extends MagisController
 			if(is_wp_error($user)) {
 				$this->_show_error($user->get_error_message());
 			} else {
-				wp_redirect('/perfil-de-usuario');
+				wp_redirect(home_url().'/perfil-de-usuario');
 			}
 		} else {
 			$this->_show_error($data->validation_message);
